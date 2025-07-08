@@ -1,157 +1,329 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Para mi Rubia 💛</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(to top, #fff0f5, #ffe4e1);
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #ffe4e1, #fff0f5);
+      text-align: center;
+      color: #444;
+      overflow-x: hidden;
     }
 
-    .container {
-      z-index: 1;
-      text-align: center;
-      padding: 30px;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      max-width: 400px;
-      animation: fadeIn 2s ease-in-out;
+    .bienvenida {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 2s ease-in;
     }
 
     h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3em;
       color: #ff69b4;
-      margin-bottom: 10px;
-    }
-
-    .message {
-      font-size: 1.2em;
-      margin-bottom: 20px;
-      color: #444;
-      animation: floatIn 2s ease-out;
     }
 
     button {
-      background: #ffd1dc;
+      padding: 15px 30px;
+      margin-top: 20px;
+      font-size: 1.1em;
       border: none;
-      padding: 10px 20px;
-      font-size: 1em;
-      border-radius: 10px;
+      border-radius: 30px;
+      background-color: #ffb6c1;
+      color: white;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background-color 0.3s ease;
     }
 
     button:hover {
-      background: #ffb6c1;
+      background-color: #ff69b4;
     }
 
-    #surprise {
-      margin-top: 20px;
-    }
-
-    .hidden {
+    .frases {
       display: none;
+      padding: 40px 20px;
     }
 
-    img {
-      width: 100px;
-      margin-top: 10px;
+    .frase {
+      font-size: 1.5em;
+      margin-bottom: 20px;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .galeria {
+      display: none;
+      padding: 60px 20px;
+      background-color: #fffafc;
     }
 
-    @keyframes floatIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .galeria h2 {
+      font-family: 'Pacifico', cursive;
+      color: #ff69b4;
+      font-size: 2em;
+      margin-bottom: 30px;
     }
 
-    /* corazones */
-    .heart {
+    .foto-juntos {
+      width: 300px;
+      height: auto;
+      border-radius: 15px;
+      object-fit: cover;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+      cursor: pointer;
+    }
+
+    .fila-fotos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .foto-rubia {
+      width: 120px;
+      height: 120px;
+      border-radius: 15px;
+      object-fit: cover;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+      transition: transform 0.3s;
+      cursor: pointer;
+      background: white;
+    }
+
+    .foto-rubia:hover {
+      transform: scale(1.07);
+    }
+
+    /* Sorpresa */
+    .sorpresa {
+      margin: 40px auto;
+    }
+
+    #mensajeSorpresa {
+      display: none;
+      font-size: 1.4em;
+      color: #ff1493;
+      margin-top: 15px;
+      animation: aparecer 1s ease;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Cuenta atrás */
+    .cuenta-regresiva {
+      margin-top: 40px;
+      font-size: 1.2em;
+      color: #d6336c;
+    }
+
+    /* Corazones flotando */
+    .corazones {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .corazon {
       position: absolute;
-      width: 20px;
-      height: 20px;
-      background: #ff69b4;
-      transform: rotate(45deg);
-      animation: floatUp 6s infinite ease-in;
-      opacity: 0.6;
+      bottom: 0;
+      font-size: 20px;
+      animation: subir 6s linear infinite;
+      opacity: 0.7;
     }
 
-    .heart::before,
-    .heart::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: #ff69b4;
-      border-radius: 50%;
-    }
-
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: -10px;
-      top: 0;
-    }
-
-    @keyframes floatUp {
+    @keyframes subir {
       0% {
-        transform: translateY(100vh) rotate(45deg);
-        opacity: 0;
-      }
-      50% {
+        transform: translateY(0) scale(1);
         opacity: 0.7;
       }
       100% {
-        transform: translateY(-10vh) rotate(45deg);
+        transform: translateY(-100vh) scale(1.5);
         opacity: 0;
+      }
+    }
+
+    /* Carta */
+    .carta {
+      max-width: 600px;
+      margin: 40px auto 80px;
+      background: #fff0f5cc;
+      border-radius: 20px;
+      padding: 30px 40px;
+      font-family: 'Pacifico', cursive;
+      color: #d6336c;
+      box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
+      line-height: 1.5;
+      font-size: 1.3em;
+      user-select: none;
+    }
+
+    .carta h3 {
+      margin-top: 0;
+      font-size: 2em;
+      text-align: center;
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 500px) {
+      .foto-juntos {
+        width: 90%;
+      }
+      .foto-rubia {
+        width: 90px;
+        height: 90px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Corazones generados -->
-  <script>
-    for (let i = 0; i < 20; i++) {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDelay = Math.random() * 5 + 's';
-      heart.style.animationDuration = 4 + Math.random() * 3 + 's';
-      document.body.appendChild(heart);
-    }
-  </script>
 
-  <div class="container">
-    <h1>Para ti, Rubia 🌸</h1>
-    <p class="message">Gracias por hacerme sentir especial. Me hace feliz saber que soy tu blanquito favorito 🤍</p>
-    <p class="message">Tú y yo nos queremos mucho, y eso no cambia, aunque el mundo dé mil vueltas 💫</p>
-    <button onclick="showSurprise()">Haz clic aquí 🩷</button>
-    <div id="surprise" class="hidden">
-      <p>🌈 Eres mi calma, mi chispa y mi persona favorita. Siempre voy a estar aquí para ti.</p>
-      <img src="https://media.giphy.com/media/26gsjCZpPolPr3sBy/giphy.gif" alt="Osito cute" />
+  <!-- Corazones -->
+  <div class="corazones" id="corazones"></div>
+
+  <!-- Bienvenida -->
+  <div class="bienvenida">
+    <h1>Hola, Rubia 💛</h1>
+    <p>Esta página es solo para ti...</p>
+    <button onclick="mostrarContenido()">Haz clic para entrar</button>
+  </div>
+
+  <!-- Frases -->
+  <div class="frases">
+    <div class="frase" id="fraseActual">Eres la luz que ilumina mis días 🌞</div>
+    <button onclick="nuevaFrase()">Dime otra 💌</button>
+  </div>
+
+  <!-- Galería -->
+  <div class="galeria">
+    <h2>Nosotros 💖</h2>
+    <img src="imagenes/juntos.jpg" alt="Nosotros" class="foto-juntos" onclick="abrirLightbox(this)">
+    <div class="fila-fotos">
+      <img src="imagenes/rubia1.png" alt="Rubia 1" class="foto-rubia" onclick="abrirLightbox(this)">
+      <img src="imagenes/rubia2.png" alt="Rubia 2" class="foto-rubia" onclick="abrirLightbox(this)">
+      <img src="imagenes/rubia3.png" alt="Rubia 3" class="foto-rubia" onclick="abrirLightbox(this)">
+      <img src="imagenes/rubia4.png" alt="Rubia 4" class="foto-rubia" onclick="abrirLightbox(this)">
+      <img src="imagenes/rubia5.png" alt="Rubia 5" class="foto-rubia" onclick="abrirLightbox(this)">
     </div>
+
+    <!-- Botón Sorpresa -->
+    <div class="sorpresa">
+      <button onclick="mostrarSorpresa()">Haz clic si me quieres 😘</button>
+      <div id="mensajeSorpresa">Eres mi rubia, te quiero mucho 💛</div>
+    </div>
+
+    <!-- Cuenta regresiva -->
+    <div class="cuenta-regresiva" id="cuentaRegresiva"></div>
+  </div>
+
+  <!-- Carta personal -->
+  <div class="carta">
+    <h3>Para mi Rubia 💛</h3>
+    <p>
+      Cada día a tu lado es un regalo que agradezco con todo mi corazón.<br>
+      No importa lo que pase, siempre serás mi luz y mi sonrisa favorita.<br>
+      Gracias por existir y por hacerme sentir tan feliz.<br>
+      Te quiero mucho, mi rubia hermosa.
+    </p>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="cerrarLightbox()">
+    <img id="lightbox-img" src="" alt="Imagen ampliada">
   </div>
 
   <script>
-    function showSurprise() {
-      document.getElementById("surprise").classList.remove("hidden");
+    const frases = [
+      "Eres la luz que ilumina mis días 🌞",
+      "Tu sonrisa es mi parte favorita del día 💕",
+      "Si tuviera que volver a empezar, te elegiría mil veces más ✨",
+      "Estás en mi mente más de lo que imaginas 🌙",
+      "Eres mi lugar favorito 💛",
+      "Me haces sonreír incluso cuando no estás 💖",
+      "Rubia, cada día contigo es un regalo 🎁"
+    ];
+
+    function mostrarContenido() {
+      document.querySelector('.bienvenida').style.display = 'none';
+      document.querySelector('.frases').style.display = 'block';
+      document.querySelector('.galeria').style.display = 'block';
+      lanzarCorazones();
+      cuentaRegresiva();
+    }
+
+    function nuevaFrase() {
+      const frase = frases[Math.floor(Math.random() * frases.length)];
+      document.getElementById('fraseActual').textContent = frase;
+    }
+
+    function abrirLightbox(img) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightboxImg.src = img.src;
+      lightbox.style.display = 'flex';
+    }
+
+    function cerrarLightbox() {
+      document.getElementById('lightbox').style.display = 'none';
+    }
+
+    function mostrarSorpresa() {
+      document.getElementById('mensajeSorpresa').style.display = 'block';
+    }
+
+    function cuentaRegresiva() {
+      const destino = new Date('2025-08-01T00:00:00');
+      const ahora = new Date();
+      const diff = destino - ahora;
+      const dias = Math.ceil(diff / (1000 * 60 * 60 * 24));
+      document.getElementById('cuentaRegresiva').innerText =
+        `Faltan ${dias} días para verte 💖`;
+    }
+
+    function lanzarCorazones() {
+      const container = document.getElementById('corazones');
+      setInterval(() => {
+        const corazon = document.createElement('div');
+        corazon.classList.add('corazon');
+        corazon.innerText = '💖';
+        corazon.style.left = Math.random() * 100 + '%';
+        corazon.style.fontSize = Math.random() * 20 + 16 + 'px';
+        container.appendChild(corazon);
+        setTimeout(() => corazon.remove(), 6000);
+      }, 500);
     }
   </script>
+
 </body>
 </html>
